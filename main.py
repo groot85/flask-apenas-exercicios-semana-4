@@ -24,6 +24,5 @@ def get_list_characters(): #faz essa def para que o programa abra a tela de visu
     
     return {"characters": characters}
 
-#eagora2235
 
 app.run(host='0.0.0.0', port=81)
