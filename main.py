@@ -1,12 +1,23 @@
-from flask import Flask
+from flask import Flask, render_template
 import urllib.request, json
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/lista")
+def get_list_characters_page():
+    url = "https://rickandmortyapi.com/api/character"
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    dict = json.loads(data)
+
+    return render_template("characters.html", characters=dict["results"])
+
+@app.route("/lista")
 # def index(): #faz essa def para que o programa abra a tela de visualização)
 #     return '<h1> Olá, WoMakers!</h1>'
 def get_list_characters(): #faz essa def para que o programa abra a tela de visualização)
+
+  
     url = "https://rickandmortyapi.com/api/character" #url do sit rick
     response = urllib.request.urlopen(url)
     characters = response.read()
