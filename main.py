@@ -3,37 +3,43 @@ import urllib.request, json
 
 app = Flask(__name__)
 
-@app.route("/lista")
-def get_list_characters_page():
-    url = "https://rickandmortyapi.com/api/character"
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    dict = json.loads(data)
 
-    return render_template("characters.html", characters=dict["results"])
+@app.route("/")
+def get_list_characters_page():
+  url = "https://rickandmortyapi.com/api/character"
+  response = urllib.request.urlopen(url)
+  data = response.read()
+  dict = json.loads(data)
+
+  return render_template("characters.html", characters=dict["results"])
+
+@app.route("/personagem/<id>")
+def get_profile(id):
+  url = "https://rickandmortyapi.com/api/character/" + id
+  response = urllib.request.urlopen(url)
+  data = response.read()
+  dict = json.loads(data)
+
+  return render_template("profile.html", profile=dict)
 
 @app.route("/lista")
 # def index(): #faz essa def para que o programa abra a tela de visualização)
 #     return '<h1> Olá, WoMakers!</h1>'
-def get_list_characters(): #faz essa def para que o programa abra a tela de visualização)
+def get_list_characters(
+):  #faz essa def para que o programa abra a tela de visualização)
+  url = "https://rickandmortyapi.com/api/character"  #url do sit rick
+  response = urllib.request.urlopen(url)
+  characters = response.read()
+  dict = json.loads(characters)
 
-  
-    url = "https://rickandmortyapi.com/api/character" #url do sit rick
-    response = urllib.request.urlopen(url)
-    characters = response.read()
-    dict = json.loads(characters)
+  characters = []
 
-    characters = []
+  for character in dict["results"]:
+    character = {"name": character["name"], "status": character["status"]}
 
-    for character in dict ["results"]:
-        character = {
-            "name": character ["name"],
-            "status": character ["status"]
-        }
+    characters.append(character)
 
-        characters.append(character)
-    
-    return {"characters": characters}
+  return {"characters": characters}
 
 
 app.run(host='0.0.0.0', port=81)
