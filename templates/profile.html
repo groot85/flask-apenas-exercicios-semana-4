@@ -2,13 +2,34 @@
 
 {% block content %}
 <div class="row">
-  
-    <div class="col-3 col-xs-6">
-      <img src="{{profile.image}}" alt="{{profile.name}}" class="img-fluid img-thumbnail" />
+
+  <div class="col-sm-3 col-6">
+
+    <img src="{{profile.image}}" alt="{{profile.name}}" class="img-fluid img-thumbnail" />
+
   </div>
 
-    <div class="col-3 col-xs-6">
-      <h1 class = "h5"> {{profile.name}}</h1>
+  <div class="col-sm-3 col-6">
+    <br>
+
+    <h1 class = "h5"> {{profile.name}}</h1>
+    <br>
+
+    <h5> Espécie: {{profile.species}}</h5>
+    <h5> Gênero: {{profile.gender}}</h5>
+    <h5> Origem: {{profile.origin.name}}</h5>
+    <h5> Localização: <a href= "/location/{{profile.location.id}}">{{profile.location.name}}</a> </h5>
   </div>
+
+  <p><Strong>Episódios:</Strong></p>
+  <table class= "row">
+    <tr>
+      <th> Nome </th>
+    </tr>
+    {% for episode in profile.episodes %}
+    <tr>
+      <td><a href="/episode/{{episode.id}}">{{episode.name}}</a></td>
+    </tr>
+    {% endfor %}
 </div>
 {% endblock %}

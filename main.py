@@ -21,6 +21,23 @@ def get_profile(id):
   data = response.read()
   dict = json.loads(data)
 
+  location_url = dict['location']['url']
+  location_response = urllib.request.urlopen(location_url)
+  location_data = location_response.read()
+  location_dict = json.loads(location_data)
+
+  dict['location'] = location_dict
+
+  episodes = []
+
+  for episode_url in dict['episode']:
+    episode_response = urllib.request.urlopen(episode_url)
+    episode_data = episode_response.read()
+    episode_dict = json.loads(episode_data)
+    episodes.append(episode_dict)
+
+  dict['episodes'] = episodes
+
   return render_template("profile.html", profile=dict)
 
 
@@ -106,11 +123,23 @@ def get_list_episodes():
   return render_template("episodes.html", episodes=episodes)
 
 
-# @app.route("/episode/<id>")
-# def get_episode(id):
-#   url = "https://rickandmortyapi.com/api/episode/"+id
-#   response = urllib.request.urlopen(url)
-#   data = response.read()
-#   episode = json.loads(data)
+@app.route("/episode/<id>")
+def get_episode(id):
+  url = "https://rickandmortyapi.com/api/episode/" + id
+  response = urllib.request.urlopen(url)
+  data = response.read()
+  episode = json.loads(data)
+
+  characters = []
+
+  for char_url in episode['characters']:
+    char_response = urllib.request.urlopen(char_url)
+    char_data = char_response.read()
+    char_dict = json.loads(char_data)
+    characters.append(char_dict)
+  episode['characters'] = characters
+
+  return render_template("episode.html", episode=episode)
+
 
 app.run(host='0.0.0.0', port=81)

@@ -2,6 +2,21 @@
 
 {% block content %}
 <div class="row">
+    <p>Nome: {{episode.name}}</p>
+    <p>Código: {{episode.episode}}</p>
+    <p>Data de Lançamento: {{episode.air_date}}</p>
+  
+    <p><strong>Personagens:</strong></p>
+    <table class="row">
+      <tr>
+        <th>Nome</th>
+      </tr>
+      {% for character in episode.characters %}
+      <tr>
+        <td><a href="/profile/{{character.id}}">{{character.name}}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
 
 </div>
 {% endblock %}
