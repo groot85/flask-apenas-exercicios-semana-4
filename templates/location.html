@@ -1,0 +1,22 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<div class="row">
+  <p> Nome: {{location.name}} </p>
+  <p> Tipo: {{location.type}} </p>
+  <p> Dimensão: {{location.dimension}} </p>
+
+  <p><Strong>Personagens:</Strong></p>
+  <table class="row">
+    <tr>
+      <th>Nome</th>
+    </tr>
+    {% for character in location.characters %}
+    <tr>
+      <td><a href ="/profile/{{character.id}}"> {{character.name}} </a></td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+{% endblock %}
